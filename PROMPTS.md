@@ -49,3 +49,11 @@ Compórtate como un experto en documentación de proyectos Android. Ayúdame a r
 **Diferencia.** El repositorio final incluye comparación, pruebas, recursos y seis prompts ordenados.
 
 **Reflexión.** Indicar el origen de la evidencia permite repetir las pruebas y distinguir qué se verificó.
+
+## 07 · Comparador de Pokémon
+
+Compórtate como un experto en Jetpack Compose y visualización de datos. Ayúdame a reproducir el avance 07. Aplica los archivos de docs/reproduccion/cambios/07 en sus rutas y reutiliza prado.png de drawable-nodpi. Desde una ficha, permite elegir el primer Pokémon y volver al catálogo con un aviso. Desde otra ficha, abre el comparador usando ambos ID y los DetalleViewModel existentes. Muestra las dos ilustraciones sobre el prado, sus tipos y barras de altura y peso a escala común por medida. El botón de vidrio intercambia las posiciones con un resorte. Conserva los roles y ofrece Reintentar si faltan datos. Prueba Lilligant y Venusaur e intercambia sus posiciones.
+
+**Diferencia.** La fase 1 deja consultar las medidas de una ficha a la vez. El comparador reúne dos fichas y mantiene la misma escala para cada par de barras.
+
+**Reflexión.** Las barras dejan ver la diferencia de un vistazo. El movimiento al intercambiar ayuda a seguir a cada Pokémon.

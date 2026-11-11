@@ -53,6 +53,12 @@ Las capturas del catálogo y del panel se tomaron con la aplicación ejecutándo
 
 [Informe](docs/informe/Pokedex_Planta_Fase2_Daniella_Leon.pdf) · [Prompts](PROMPTS.md) · [Guía de reproducción](docs/reproduccion/GUIA.md)
 
-[Acceso](docs/capturas_fase2/01_login.png) · [Catálogo oscuro con texto ampliado](docs/capturas_fase2/02_catalogo.png) · [Detalle](docs/capturas_fase2/03_detalle.png) · [Favoritos](docs/capturas_fase2/04_favoritos.png) · [Favoritos vacíos](docs/capturas_fase2/05_favoritos_vacios.png) · [Búsqueda](docs/capturas_fase2/06_busqueda.png) · [Panel Admin](docs/capturas_fase2/07_admin.png) · [Sin conexión](docs/capturas_fase2/08_sin_red.png)
+[Acceso](docs/capturas_fase2/01_login.png) · [Catálogo](docs/capturas_fase2/02_catalogo.png) · [Detalle](docs/capturas_fase2/03_detalle.png) · [Favoritos](docs/capturas_fase2/04_favoritos.png) · [Favoritos vacíos](docs/capturas_fase2/05_favoritos_vacios.png) · [Búsqueda](docs/capturas_fase2/06_busqueda.png) · [Panel Admin](docs/capturas_fase2/07_admin.png) · [Sin conexión](docs/capturas_fase2/08_sin_red.png)
 
-Las capturas de ambos roles se hicieron en una sesión de revisión. La captura sin red fuerza un fallo de red para comprobar la caché. Firebase Authentication y las reglas publicadas se documentan por separado en el informe. La validación del inicio de sesión en Android con las cuentas de prueba queda pendiente.
+Las capturas de la versión base se hicieron en una sesión de revisión. La captura sin red fuerza un fallo de red para comprobar la caché. Firebase Authentication y las reglas publicadas se documentan por separado en el informe. El informe incluye la prueba de inicio de sesión con las cuentas de Firebase.
+
+## Comparador de Pokémon
+
+Abre una ficha, toca **Elegir para comparar** y elige otro Pokémon. **Comparar con el primero** abre una vista con sus tipos, alturas y pesos. Las barras comparten escala por medida. El botón sobre las imágenes intercambia sus posiciones. **Elegir otros Pokémon** vuelve al catálogo y limpia la selección.
+
+La demostración usa `daniella.leon@example.com` para el catálogo y `admin@example.com` para el panel de administración. Las contraseñas están en la copia de entrega del informe.

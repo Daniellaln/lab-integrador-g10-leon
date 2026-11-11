@@ -76,3 +76,12 @@ Ejecuta `gradlew :app:testDebugUnitTest :app:assembleDebug` después de cada blo
 
 - `app/src/main/java/com/tecsup/pokemon/ui/admin/AdminScreen.kt`
 - `app/src/main/java/com/tecsup/pokemon/ui/components/Estados.kt`
+
+## Archivos del avance 07
+
+El comparador usa `prado.png` y los recursos de Pokémon que ya se agregaron. Aplica estos archivos.
+
+- `app/src/main/java/com/tecsup/pokemon/ui/navigation/AppNav.kt`
+- `app/src/main/java/com/tecsup/pokemon/ui/detalle/DetalleScreen.kt`
+- `app/src/main/java/com/tecsup/pokemon/ui/comparar/CompararScreen.kt`
+- `app/src/main/res/drawable/poke_comparar.xml`

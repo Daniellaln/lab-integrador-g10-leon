@@ -29,6 +29,7 @@ import com.tecsup.pokemon.ui.components.BarraVidrio
 import com.tecsup.pokemon.ui.components.Destino
 import com.tecsup.pokemon.ui.components.Icono
 import com.tecsup.pokemon.ui.components.VidrioBoton
+import com.tecsup.pokemon.ui.comparar.CompararScreen
 import com.tecsup.pokemon.ui.detalle.DetalleScreen
 import com.tecsup.pokemon.ui.detalle.DetalleViewModel
 import com.tecsup.pokemon.ui.favoritos.FavoritosScreen
@@ -37,6 +38,7 @@ import com.tecsup.pokemon.ui.lista.ListaScreen
 import com.tecsup.pokemon.ui.lista.ListaViewModel
 import com.tecsup.pokemon.ui.login.LoginScreen
 import com.tecsup.pokemon.ui.login.LoginViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun AppNav(container: AppContainer) {
@@ -62,8 +64,12 @@ fun CatalogoNav(container: AppContainer, admin: Boolean, salir: () -> Unit) {
     val nav = rememberNavController()
     val entrada by nav.currentBackStackEntryAsState()
     val ruta = entrada?.destination?.route ?: "catalogo"
-    val enDetalle = ruta == "detalle/{id}"
+    val pantallaSecundaria = ruta == "detalle/{id}" || ruta == "comparar/{primero}/{segundo}"
     var menu by rememberSaveable { mutableStateOf(false) }
+    var seleccionado by rememberSaveable { mutableStateOf<String?>(null) }
+    var revisionCatalogo by rememberSaveable { mutableIntStateOf(0) }
+    val mensajes = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
     val destinos = remember(admin) {
         buildList {
             add(Destino("catalogo", "Catálogo", R.drawable.poke_libro))
@@ -92,7 +98,7 @@ fun CatalogoNav(container: AppContainer, admin: Boolean, salir: () -> Unit) {
         val pantallaAncha = maxWidth >= 600.dp
         val tituloCompacto = maxWidth < 380.dp
         Row(Modifier.fillMaxSize()) {
-            if (pantallaAncha && !enDetalle) {
+            if (pantallaAncha && !pantallaSecundaria) {
                 NavigationRail(
                     containerColor = colores.surface,
                     modifier = Modifier.fillMaxHeight(),
@@ -113,6 +119,7 @@ fun CatalogoNav(container: AppContainer, admin: Boolean, salir: () -> Unit) {
                         "favoritos" -> "Favoritos"
                         "admin" -> "Panel Admin"
                         "detalle/{id}" -> "Ficha Pokémon"
+                        "comparar/{primero}/{segundo}" -> "Comparar Pokémon"
                         else -> "Pokédex Planta"
                     }
                     TopAppBar(
@@ -125,7 +132,7 @@ fun CatalogoNav(container: AppContainer, admin: Boolean, salir: () -> Unit) {
                             )
                         },
                         navigationIcon = {
-                            if (enDetalle) {
+                            if (pantallaSecundaria) {
                                 VidrioBoton({ nav.popBackStack() }, Modifier.padding(start = 8.dp, end = 4.dp).size(48.dp)) {
                                     Icono(R.drawable.poke_volver, "Volver")
                                 }
@@ -134,7 +141,7 @@ fun CatalogoNav(container: AppContainer, admin: Boolean, salir: () -> Unit) {
                             }
                         },
                         actions = {
-                            if (!enDetalle) {
+                            if (!pantallaSecundaria) {
                                 Box(Modifier.padding(end = 16.dp)) {
                                     VidrioBoton({ menu = true }, Modifier.size(48.dp)) { Icono(R.drawable.poke_mas, "Opciones de sesión") }
                                     DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
@@ -148,8 +155,9 @@ fun CatalogoNav(container: AppContainer, admin: Boolean, salir: () -> Unit) {
                         },
                     )
                 },
+                snackbarHost = { SnackbarHost(mensajes) },
                 bottomBar = {
-                    if (!enDetalle && !pantallaAncha && !teclado) BarraVidrio(destinos, ruta, elegir)
+                    if (!pantallaSecundaria && !pantallaAncha && !teclado) BarraVidrio(destinos, ruta, elegir)
                 },
             ) { padding ->
                 NavHost(nav, startDestination = "catalogo", modifier = Modifier.padding(padding)) {
@@ -157,13 +165,50 @@ fun CatalogoNav(container: AppContainer, admin: Boolean, salir: () -> Unit) {
                         val vm: ListaViewModel = viewModel(factory = container.factory)
                         val estado by vm.estado.collectAsStateWithLifecycle()
                         val aviso by vm.aviso.collectAsStateWithLifecycle()
-                        ListaScreen(estado, aviso = aviso, reintentar = vm::refrescar, abrir = abrir, alternar = vm::alternarFavorito)
+                        key(revisionCatalogo) {
+                            ListaScreen(estado, aviso = aviso, reintentar = vm::refrescar, abrir = abrir, alternar = vm::alternarFavorito)
+                        }
                     }
                     composable("detalle/{id}") { entradaDetalle ->
                         val id = requireNotNull(entradaDetalle.arguments?.getString("id"))
                         val vm: DetalleViewModel = viewModel(factory = container.detalleFactory(id))
                         val estado by vm.estado.collectAsStateWithLifecycle()
-                        DetalleScreen(estado, vm::cargar, vm::alternarFavorito)
+                        val primero = seleccionado
+                        val etiqueta = when (primero) {
+                            null -> "Elegir para comparar"
+                            id -> "Quitar de la comparación"
+                            else -> "Comparar con el primero"
+                        }
+                        DetalleScreen(estado, vm::cargar, vm::alternarFavorito, etiquetaComparar = etiqueta) {
+                            when (primero) {
+                                null -> {
+                                    seleccionado = id
+                                    revisionCatalogo++
+                                    elegir("catalogo")
+                                    scope.launch { mensajes.showSnackbar("Pokémon elegido. Abre otra ficha para comparar.") }
+                                }
+                                id -> seleccionado = null
+                                else -> nav.navigate("comparar/${Uri.encode(primero)}/${Uri.encode(id)}") {
+                                    launchSingleTop = true
+                                }
+                            }
+                        }
+                    }
+                    composable("comparar/{primero}/{segundo}") { argumentos ->
+                        val primero = requireNotNull(argumentos.arguments?.getString("primero"))
+                        val segundo = requireNotNull(argumentos.arguments?.getString("segundo"))
+                        val a: DetalleViewModel = viewModel(key = primero, factory = container.detalleFactory(primero))
+                        val b: DetalleViewModel = viewModel(key = segundo, factory = container.detalleFactory(segundo))
+                        val estadoA by a.estado.collectAsStateWithLifecycle()
+                        val estadoB by b.estado.collectAsStateWithLifecycle()
+                        CompararScreen(estadoA, estadoB, reintentar = {
+                            a.cargar()
+                            b.cargar()
+                        }, elegirOtros = {
+                            seleccionado = null
+                            revisionCatalogo++
+                            elegir("catalogo")
+                        })
                     }
                     composable("favoritos") {
                         val vm: FavoritosViewModel = viewModel(factory = container.factory)

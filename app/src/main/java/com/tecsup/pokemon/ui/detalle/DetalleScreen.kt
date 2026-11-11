@@ -22,7 +22,9 @@ import com.tecsup.pokemon.ui.UiState
 import com.tecsup.pokemon.ui.components.ArtePokemon
 import com.tecsup.pokemon.ui.components.Cargando
 import com.tecsup.pokemon.ui.components.Corazon
+import com.tecsup.pokemon.ui.components.Icono
 import com.tecsup.pokemon.ui.components.MensajeCentrado
+import com.tecsup.pokemon.ui.components.VidrioBoton
 import java.text.NumberFormat
 
 @Composable
@@ -31,17 +33,26 @@ fun DetalleScreen(
     reintentar: () -> Unit,
     alternar: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
+    etiquetaComparar: String = "",
+    comparar: (() -> Unit)? = null,
 ) {
     when (estado) {
         UiState.Cargando -> Cargando(modifier)
         is UiState.Error -> MensajeCentrado("Ficha no disponible", estado.mensaje, modifier, reintentar)
-        is UiState.Exito -> Ficha(estado.datos, reintentar, alternar, modifier)
+        is UiState.Exito -> Ficha(estado.datos, reintentar, alternar, modifier, etiquetaComparar, comparar)
     }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun Ficha(item: Item, reintentar: () -> Unit, alternar: (() -> Unit)?, modifier: Modifier) {
+private fun Ficha(
+    item: Item,
+    reintentar: () -> Unit,
+    alternar: (() -> Unit)?,
+    modifier: Modifier,
+    etiquetaComparar: String,
+    comparar: (() -> Unit)?,
+) {
     val colores = MaterialTheme.colorScheme
     val numeros = NumberFormat.getNumberInstance()
     Box(modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
@@ -99,6 +110,21 @@ private fun Ficha(item: Item, reintentar: () -> Unit, alternar: (() -> Unit)?, m
                 }
                 HorizontalDivider(color = colores.outlineVariant)
             }
+            if (comparar != null) {
+                VidrioBoton(
+                    comparar, Modifier.fillMaxWidth().heightIn(min = 52.dp),
+                    forma = RoundedCornerShape(26.dp),
+                ) {
+                    Row(
+                        Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icono(R.drawable.poke_comparar, null)
+                        Text(etiquetaComparar, style = MaterialTheme.typography.labelLarge)
+                    }
+                }
+            }
         }
     }
 }
@@ -111,7 +137,7 @@ private fun Medida(valor: String, etiqueta: String) {
     }
 }
 
-private fun nombreTipo(tipo: String) = when (tipo) {
+internal fun nombreTipo(tipo: String) = when (tipo) {
     "grass" -> "Planta"
     "poison" -> "Veneno"
     "ground" -> "Tierra"
