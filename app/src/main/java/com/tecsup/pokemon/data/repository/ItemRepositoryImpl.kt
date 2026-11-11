@@ -47,7 +47,7 @@ class ItemRepositoryImpl(
             dao.guardar(detalle.aEntity())
             Result.success(detalle)
         } catch (e: IOException) {
-            Result.failure(e)
+            anterior?.aModelo()?.let { Result.success(it) } ?: Result.failure(e)
         } catch (e: HttpException) {
             Result.failure(e)
         } catch (e: IllegalArgumentException) {

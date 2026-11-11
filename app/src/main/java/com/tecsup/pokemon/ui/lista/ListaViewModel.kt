@@ -49,6 +49,13 @@ class ListaViewModel(
                 },
                 onFailure = { error ->
                     carga.value = UiState.Error(mensajeDe(error))
+                    if (repo.cantidadGuardada() > 0) {
+                        _aviso.value = if (error is IOException) {
+                            "Sin conexión: mostrando datos guardados"
+                        } else {
+                            "No se pudo actualizar: mostrando datos guardados"
+                        }
+                    }
                 },
             )
         }

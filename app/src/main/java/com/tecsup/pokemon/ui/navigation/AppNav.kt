@@ -80,8 +80,9 @@ fun CatalogoNav(
             composable("catalogo") {
                 val vm: ListaViewModel = viewModel(factory = container.factory)
                 val estado by vm.estado.collectAsStateWithLifecycle()
+                val aviso by vm.aviso.collectAsStateWithLifecycle()
                 ListaScreen(
-                    estado, reintentar = vm::refrescar,
+                    estado, aviso = aviso, reintentar = vm::refrescar,
                     abrir = abrir, alternar = vm::alternarFavorito,
                 )
             }
