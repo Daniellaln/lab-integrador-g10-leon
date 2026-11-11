@@ -85,3 +85,63 @@ El comparador usa `prado.png` y los recursos de Pokémon que ya se agregaron. Ap
 - `app/src/main/java/com/tecsup/pokemon/ui/detalle/DetalleScreen.kt`
 - `app/src/main/java/com/tecsup/pokemon/ui/comparar/CompararScreen.kt`
 - `app/src/main/res/drawable/poke_comparar.xml`
+
+## Archivos del avance 08
+
+- `app/src/main/java/com/tecsup/pokemon/data/local/AppDatabase.kt`
+- `app/src/main/java/com/tecsup/pokemon/data/local/ItemEntity.kt`
+- `app/src/main/java/com/tecsup/pokemon/data/mapper/Mappers.kt`
+- `app/src/main/java/com/tecsup/pokemon/data/mapper/PerfilMappers.kt`
+- `app/src/main/java/com/tecsup/pokemon/data/mapper/RoomMappers.kt`
+- `app/src/main/java/com/tecsup/pokemon/data/remote/ApiService.kt`
+- `app/src/main/java/com/tecsup/pokemon/data/remote/dto/ItemDto.kt`
+- `app/src/main/java/com/tecsup/pokemon/data/remote/dto/PerfilDto.kt`
+- `app/src/main/java/com/tecsup/pokemon/data/repository/ItemRepository.kt`
+- `app/src/main/java/com/tecsup/pokemon/data/repository/ItemRepositoryImpl.kt`
+- `app/src/main/java/com/tecsup/pokemon/domain/model/Item.kt`
+- `app/src/main/java/com/tecsup/pokemon/domain/model/PerfilPokemon.kt`
+- `app/src/main/java/com/tecsup/pokemon/ui/detalle/DetalleViewModel.kt`
+- `app/src/test/java/com/tecsup/pokemon/ListaViewModelTest.kt`
+- `app/src/test/java/com/tecsup/pokemon/PerfilPokemonTest.kt`
+
+## Archivos del avance 09
+
+- `app/src/main/java/com/tecsup/pokemon/ui/admin/AdminScreen.kt`
+- `app/src/main/java/com/tecsup/pokemon/ui/comparar/CompararScreen.kt`
+- `app/src/main/java/com/tecsup/pokemon/ui/comparar/Situacion.kt`
+- `app/src/main/java/com/tecsup/pokemon/ui/components/Vidrio.kt`
+- `app/src/main/java/com/tecsup/pokemon/ui/detalle/DetalleScreen.kt`
+- `app/src/main/java/com/tecsup/pokemon/ui/detalle/Habitat.kt`
+- `app/src/main/java/com/tecsup/pokemon/ui/lista/ListaScreen.kt`
+- `app/src/main/java/com/tecsup/pokemon/ui/login/LoginScreen.kt`
+- `app/src/main/java/com/tecsup/pokemon/ui/navigation/AppNav.kt`
+- `app/src/main/java/com/tecsup/pokemon/ui/theme/Color.kt`
+- `app/src/main/java/com/tecsup/pokemon/ui/theme/Theme.kt`
+- `app/src/main/java/com/tecsup/pokemon/ui/theme/Type.kt`
+- `app/src/main/res/drawable/poke_marca.xml`
+- `app/src/main/res/drawable/poke_marca_launcher.xml`
+- `app/src/main/res/drawable/poke_marca_mono.xml`
+- `app/src/main/res/drawable-nodpi/arena_duelo.webp`
+- `app/src/main/res/drawable-nodpi/borde_bosque.webp`
+- `app/src/main/res/drawable-nodpi/borde_cueva.webp`
+- `app/src/main/res/drawable-nodpi/borde_invernadero.webp`
+- `app/src/main/res/drawable-nodpi/borde_mar.webp`
+- `app/src/main/res/drawable-nodpi/borde_montana.webp`
+- `app/src/main/res/drawable-nodpi/borde_pradera.webp`
+- `app/src/main/res/drawable-nodpi/borde_ribera.webp`
+- `app/src/main/res/drawable-nodpi/borde_rocoso.webp`
+- `app/src/main/res/drawable-nodpi/borde_santuario.webp`
+- `app/src/main/res/drawable-nodpi/borde_urbano.webp`
+- `app/src/main/res/drawable-nodpi/hab_bosque.webp`
+- `app/src/main/res/drawable-nodpi/hab_cueva.webp`
+- `app/src/main/res/drawable-nodpi/hab_invernadero.webp`
+- `app/src/main/res/drawable-nodpi/hab_mar.webp`
+- `app/src/main/res/drawable-nodpi/hab_montana.webp`
+- `app/src/main/res/drawable-nodpi/hab_pradera.webp`
+- `app/src/main/res/drawable-nodpi/hab_ribera.webp`
+- `app/src/main/res/drawable-nodpi/hab_rocoso.webp`
+- `app/src/main/res/drawable-nodpi/hab_santuario.webp`
+- `app/src/main/res/drawable-nodpi/hab_urbano.webp`
+- `app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml`
+- `app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml`
+- `app/src/main/res/values/poke_brand.xml`

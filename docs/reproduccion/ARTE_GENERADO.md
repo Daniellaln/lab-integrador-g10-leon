@@ -13,3 +13,11 @@ Wide 3:2 mobile artwork for an illustrated botanical field guide. An open meadow
 ## flores_prensadas.png
 
 A wide 3:2 botanical still life as an editorial illustration for the empty Favorites page of a delicate mobile field journal. One open ivory pocket notebook lies slightly diagonally, two preserved pink bellflowers and soft sage leaves carefully pressed onto its blank pages, a narrow dusty rose ribbon, airy cream desktop, sunlight from upper left, elegant handmade gouache and watercolor paper texture, understated cute composition with plenty of breathing room. A single integrated composition, botanical, quiet and polished. No writing, letters, numbers, stickers, interface, characters, labels, logos or watermark.
+
+## Arte del atlas
+
+Los fondos `hab_*.webp` y los marcos `borde_*.webp` se encuentran en `app/src/main/res/drawable-nodpi/`. Se reutilizan por hábitat. La Pokédex coloca el arte oficial del Pokémon entre el fondo y la capa frontal. `arena_duelo.webp` se usa para el comparador.
+
+Para recrear un fondo, genera un escenario horizontal 3:2 con luz clara, suelo abierto y el centro libre para colocar un Pokémon. Conserva la vegetación, las rocas o el agua del hábitat en los laterales. Para recrear un marco, genera una imagen vertical 2:3 con canal alfa, dos elementos altos y finos en los bordes y el centro transparente. No incluyas personajes, texto ni controles en las imágenes.
+
+Los nombres usados son `bosque`, `pradera`, `cueva`, `montana`, `santuario`, `rocoso`, `mar`, `urbano`, `ribera` e `invernadero`.

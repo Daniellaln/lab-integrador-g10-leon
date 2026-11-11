@@ -62,3 +62,13 @@ Las capturas de la versión base se hicieron en una sesión de revisión. La cap
 Abre una ficha, toca **Elegir para comparar** y elige otro Pokémon. **Comparar con el primero** abre una vista con sus tipos, alturas y pesos. Las barras comparten escala por medida. El botón sobre las imágenes intercambia sus posiciones. **Elegir otros Pokémon** vuelve al catálogo y limpia la selección.
 
 La demostración usa `daniella.leon@example.com` para el catálogo y `admin@example.com` para el panel de administración. Las contraseñas están en la copia de entrega del informe.
+
+## Atlas de hábitats
+
+El catálogo es el inicio de la app. La ficha combina el arte oficial de PokéAPI con una escena y una capa vertical propia. En Ficha están la descripción, las medidas, las estadísticas y la efectividad defensiva. Técnicas reúne habilidades y movimientos. Evolución muestra las etapas de la especie.
+
+El comparador permite cambiar la situación. Usa velocidad base para **Atacar primero**, el mayor ataque para **Presión ofensiva**, la suma de PS y defensas para **Aguantar golpes**, el número de resistencias e inmunidades para **Resistir más tipos**, y efectividad para **Cruce de tipos**.
+
+Room migra de 1 a 2 con `perfilJson`. Los favoritos se conservan. La descripción y las medidas descargadas siguen disponibles en la caché.
+
+Las ilustraciones de Pokémon provienen de PokéAPI. Los diez fondos, las diez capas y la arena fueron generados para este proyecto.

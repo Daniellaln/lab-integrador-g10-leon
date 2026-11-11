@@ -57,3 +57,27 @@ Compórtate como un experto en Jetpack Compose y visualización de datos. Ayúda
 **Diferencia.** La fase 1 deja consultar las medidas de una ficha a la vez. El comparador reúne dos fichas y mantiene la misma escala para cada par de barras.
 
 **Reflexión.** Las barras dejan ver la diferencia de un vistazo. El movimiento al intercambiar ayuda a seguir a cada Pokémon.
+
+## 08 · Datos de PokéAPI y caché
+
+Compórtate como un experto en Android, Retrofit y Room. Ayúdame a reproducir el avance 08. Aplica los archivos de docs/reproduccion/cambios/08 en sus rutas. Amplía pokemon/{id} con estadísticas, habilidades y movimientos. Lee descripción, categoría, hábitat y evolución en pokemon-species y evolution-chain. Combina los multiplicadores defensivos de los tipos. Consulta la ficha de una técnica al tocarla. Migra Room de 1 a 2 agregando perfilJson y conserva catálogo y favoritos. Ejecuta las pruebas y verifica el caso de datos parciales sin red.
+
+**Diferencia.** La ficha anterior solo guardaba tipos y medidas. Ahora también conserva los datos de combate y de especie que ya se descargaron.
+
+**Reflexión.** La migración permite actualizar la app sin perder los Pokémon guardados por la persona.
+
+## 09 · Hábitats, interfaz y duelos
+
+Compórtate como un experto en Jetpack Compose y diseño móvil. Ayúdame a reproducir el avance 09. Aplica docs/reproduccion/cambios/09 y copia los WebP hab_*, borde_* y arena_duelo.webp a app/src/main/res/drawable-nodpi. Usa Manrope, blanco frío, esmeralda y lila, el icono poke_marca y botones principales de 60 dp. Coloca el arte oficial sobre el fondo de hábitat y la capa vertical transparente en los bordes. Deja el texto al centro y etiqueta las escenas sugeridas. Divide la ficha en Ficha, Técnicas y Evolución. Muestra la selección de comparación arriba del catálogo. En el comparador usa arena verde y lila, barras animadas y un selector de situaciones. Prueba Lilligant y Venusaur.
+
+**Diferencia.** El nuevo inicio es el catálogo con acceso directo a la lupa. Las fichas muestran el hábitat por capas y el comparador cambia el resultado según el atributo elegido.
+
+**Reflexión.** Cada pantalla deja una acción destacada. El resto aparece cuando la persona abre una sección o cambia de situación.
+
+## 10 · Evidencias del atlas
+
+Compórtate como un experto en documentación de Android. Ayúdame a reproducir el avance 10. Conserva la configuración local de Firebase y verifica el acceso con usuario y administrador. Documenta la migración de Room, la ficha con Pokémon y marcos verticales, el catálogo, las técnicas y la evolución. Incluye dos situaciones del comparador con sus resultados y los siete prompts anteriores más estos tres. Mantén en Git el informe sin contraseñas y usa el PDF de entrega para los accesos de demostración.
+
+**Diferencia.** El informe incorpora la interfaz actual y las pruebas de las nuevas pantallas.
+
+**Reflexión.** Las capturas muestran lo que hace cada pantalla. Los prompts permiten repetir los cambios en el mismo orden.
