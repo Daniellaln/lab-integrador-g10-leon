@@ -12,6 +12,7 @@ import com.tecsup.pokemon.data.remote.RetrofitClient
 import com.tecsup.pokemon.data.repository.ItemRepository
 import com.tecsup.pokemon.data.repository.ItemRepositoryImpl
 import com.tecsup.pokemon.notification.Notificador
+import com.tecsup.pokemon.ui.admin.AdminViewModel
 import com.tecsup.pokemon.ui.detalle.DetalleViewModel
 import com.tecsup.pokemon.ui.favoritos.FavoritosViewModel
 import com.tecsup.pokemon.ui.lista.ListaViewModel
@@ -32,6 +33,7 @@ class AppContainer(context: Context) {
         initializer { ListaViewModel(repositorio, notificador) }
         initializer { FavoritosViewModel(repositorio) }
         initializer { LoginViewModel(auth) }
+        initializer { AdminViewModel(repositorio, notificador) }
     }
 
     fun detalleFactory(id: String): ViewModelProvider.Factory = viewModelFactory {

@@ -12,7 +12,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.tecsup.pokemon.AppContainer
+import com.tecsup.pokemon.domain.model.Rol
 import com.tecsup.pokemon.ui.UiState
+import com.tecsup.pokemon.ui.admin.AdminScreen
+import com.tecsup.pokemon.ui.admin.AdminViewModel
 import com.tecsup.pokemon.ui.detalle.DetalleScreen
 import com.tecsup.pokemon.ui.detalle.DetalleViewModel
 import com.tecsup.pokemon.ui.favoritos.FavoritosScreen
@@ -32,7 +35,7 @@ fun AppNav(container: AppContainer) {
             LoginScreen(estado, login::ingresar)
         } else {
             key(sesion.uid) {
-                CatalogoNav(container, login::salir)
+                CatalogoNav(container, sesion.rol == Rol.ADMIN, login::salir)
             }
         }
     }
@@ -42,6 +45,7 @@ fun AppNav(container: AppContainer) {
 @Composable
 fun CatalogoNav(
     container: AppContainer,
+    admin: Boolean,
     salir: () -> Unit,
 ) {
     val nav = rememberNavController()
@@ -58,6 +62,7 @@ fun CatalogoNav(
                 title = {
                     Text(when (ruta) {
                         "favoritos" -> "Favoritos"
+                        "admin" -> "Panel Admin"
                         "detalle/{id}" -> "Ficha Pokémon"
                         else -> "Pokédex Planta"
                     })
@@ -90,6 +95,19 @@ fun CatalogoNav(
                         icon = { Text("F") },
                         label = { Text("Favoritos") },
                     )
+                    if (admin) {
+                        NavigationBarItem(
+                            selected = ruta == "admin",
+                            onClick = {
+                                nav.navigate("admin") {
+                                    popUpTo("catalogo")
+                                    launchSingleTop = true
+                                }
+                            },
+                            icon = { Text("A") },
+                            label = { Text("Admin") },
+                        )
+                    }
                 }
             }
         },
@@ -114,6 +132,15 @@ fun CatalogoNav(
                 val vm: FavoritosViewModel = viewModel(factory = container.factory)
                 val estado by vm.estado.collectAsStateWithLifecycle()
                 FavoritosScreen(estado, abrir, vm::alternarFavorito)
+            }
+            if (admin) {
+                composable("admin") {
+                    val vm: AdminViewModel = viewModel(factory = container.factory)
+                    val estado by vm.estado.collectAsStateWithLifecycle()
+                    val ocupado by vm.ocupado.collectAsStateWithLifecycle()
+                    val mensaje by vm.mensaje.collectAsStateWithLifecycle()
+                    AdminScreen(estado, ocupado, mensaje, vm::sincronizar, vm::limpiar)
+                }
             }
         }
     }
