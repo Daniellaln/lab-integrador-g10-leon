@@ -8,6 +8,7 @@ import com.tecsup.pokemon.data.remote.RetrofitClient
 import com.tecsup.pokemon.data.repository.ItemRepository
 import com.tecsup.pokemon.data.repository.ItemRepositoryImpl
 import com.tecsup.pokemon.notification.Notificador
+import com.tecsup.pokemon.ui.detalle.DetalleViewModel
 import com.tecsup.pokemon.ui.lista.ListaViewModel
 
 class AppContainer(context: Context) {
@@ -16,5 +17,9 @@ class AppContainer(context: Context) {
 
     val factory: ViewModelProvider.Factory = viewModelFactory {
         initializer { ListaViewModel(repositorio, notificador) }
+    }
+
+    fun detalleFactory(id: String): ViewModelProvider.Factory = viewModelFactory {
+        initializer { DetalleViewModel(repositorio, id) }
     }
 }

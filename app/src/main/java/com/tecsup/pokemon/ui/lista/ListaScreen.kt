@@ -23,7 +23,7 @@ fun ListaScreen(
     vacio: String = "Sin Pokémon",
     mensajeVacio: String = "Sincroniza para descargar el catálogo.",
     reintentar: (() -> Unit)? = null,
-    abrir: ((String) -> Unit)? = null,
+    abrir: (String) -> Unit,
     alternar: ((String) -> Unit)? = null,
 ) {
     Column(modifier.fillMaxSize()) {
@@ -58,8 +58,7 @@ fun ListaScreen(
                                     contentScale = ContentScale.Fit,
                                 )
                                 TextButton(
-                                    onClick = { abrir?.invoke(pokemon.id) },
-                                    enabled = abrir != null,
+                                    onClick = { abrir(pokemon.id) },
                                     modifier = Modifier.weight(1f).heightIn(min = 48.dp),
                                 ) {
                                     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.Start) {
