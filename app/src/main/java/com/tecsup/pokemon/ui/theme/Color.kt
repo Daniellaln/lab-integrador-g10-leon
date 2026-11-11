@@ -2,10 +2,12 @@ package com.tecsup.pokemon.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
-
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+internal val Marfil = Color(0xFFF7F6EE)
+internal val Tinta = Color(0xFF202E25)
+internal val Bosque = Color(0xFF2E533D)
+internal val Salvia = Color(0xFFDFE9DB)
+internal val Petalo = Color(0xFFF4E2E5)
+internal val Vino = Color(0xFF793D51)
+internal val Noche = Color(0xFF17231C)
+internal val ClaroNoche = Color(0xFFE5EDE1)
+internal val BosqueNoche = Color(0xFFADDBB5)
