@@ -12,6 +12,7 @@ import com.tecsup.pokemon.data.remote.RetrofitClient
 import com.tecsup.pokemon.data.repository.ItemRepository
 import com.tecsup.pokemon.data.repository.ItemRepositoryImpl
 import com.tecsup.pokemon.notification.Notificador
+import com.tecsup.pokemon.notification.NotificadorAndroid
 import com.tecsup.pokemon.ui.admin.AdminViewModel
 import com.tecsup.pokemon.ui.detalle.DetalleViewModel
 import com.tecsup.pokemon.ui.favoritos.FavoritosViewModel
@@ -22,7 +23,7 @@ class AppContainer(context: Context) {
     private val repositorio: ItemRepository by lazy {
         ItemRepositoryImpl(RetrofitClient.crear(), AppDatabase.obtener(context.applicationContext))
     }
-    private val notificador = Notificador { _, _ -> }
+    private val notificador: Notificador = NotificadorAndroid(context.applicationContext)
     private val auth: AuthRepository by lazy {
         val app = FirebaseApp.getApps(context.applicationContext)
             .firstOrNull { it.name == FirebaseApp.DEFAULT_APP_NAME }

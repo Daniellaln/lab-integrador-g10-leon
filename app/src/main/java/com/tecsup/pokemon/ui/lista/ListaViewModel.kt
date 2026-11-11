@@ -46,6 +46,7 @@ class ListaViewModel(
             repo.refrescar().fold(
                 onSuccess = { guardados ->
                     carga.value = UiState.Exito(Unit)
+                    notificador.mostrar("Catálogo sincronizado", "Se guardaron $guardados elementos")
                 },
                 onFailure = { error ->
                     carga.value = UiState.Error(mensajeDe(error))

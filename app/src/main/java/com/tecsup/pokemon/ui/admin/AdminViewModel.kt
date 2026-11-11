@@ -33,6 +33,7 @@ class AdminViewModel(
         repo.refrescar().fold(
             onSuccess = {
                 val texto = "Se guardaron $it elementos"
+                notificador.mostrar("Catálogo sincronizado", texto)
                 texto
             },
             onFailure = ::mensajeDe,

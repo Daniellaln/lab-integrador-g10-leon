@@ -13,6 +13,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.tecsup.pokemon.AppContainer
 import com.tecsup.pokemon.domain.model.Rol
+import com.tecsup.pokemon.notification.PermisoNotificaciones
 import com.tecsup.pokemon.ui.UiState
 import com.tecsup.pokemon.ui.admin.AdminScreen
 import com.tecsup.pokemon.ui.admin.AdminViewModel
@@ -35,7 +36,9 @@ fun AppNav(container: AppContainer) {
             LoginScreen(estado, login::ingresar)
         } else {
             key(sesion.uid) {
-                CatalogoNav(container, sesion.rol == Rol.ADMIN, login::salir)
+                PermisoNotificaciones {
+                    CatalogoNav(container, sesion.rol == Rol.ADMIN, login::salir)
+                }
             }
         }
     }
