@@ -10,6 +10,7 @@ import com.tecsup.pokemon.data.repository.ItemRepository
 import com.tecsup.pokemon.data.repository.ItemRepositoryImpl
 import com.tecsup.pokemon.notification.Notificador
 import com.tecsup.pokemon.ui.detalle.DetalleViewModel
+import com.tecsup.pokemon.ui.favoritos.FavoritosViewModel
 import com.tecsup.pokemon.ui.lista.ListaViewModel
 
 class AppContainer(context: Context) {
@@ -20,6 +21,7 @@ class AppContainer(context: Context) {
 
     val factory: ViewModelProvider.Factory = viewModelFactory {
         initializer { ListaViewModel(repositorio, notificador) }
+        initializer { FavoritosViewModel(repositorio) }
     }
 
     fun detalleFactory(id: String): ViewModelProvider.Factory = viewModelFactory {
