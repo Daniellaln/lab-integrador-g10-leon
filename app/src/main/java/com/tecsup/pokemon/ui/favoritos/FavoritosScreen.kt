@@ -11,14 +11,13 @@ fun FavoritosScreen(
     estado: UiState<List<Item>>,
     abrir: (String) -> Unit,
     alternar: (String) -> Unit,
+    explorar: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ListaScreen(
-        estado = estado,
-        modifier = modifier,
+        estado = estado, modifier = modifier,
         vacio = "Aún no hay favoritos",
-        mensajeVacio = "Guarda un Pokémon del catálogo para verlo aquí.",
-        abrir = abrir,
-        alternar = alternar,
+        mensajeVacio = "Guarda un Pokémon para encontrarlo aquí.",
+        abrir = abrir, alternar = alternar, explorar = explorar,
     )
 }
