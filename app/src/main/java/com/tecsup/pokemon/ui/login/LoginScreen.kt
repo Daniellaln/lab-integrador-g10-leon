@@ -48,8 +48,8 @@ fun LoginScreen(estado: UiState<Sesion?>, ingresar: (String, String) -> Unit) {
         Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
             Box(Modifier.fillMaxWidth().height(altura)) {
                 Image(
-                    painterResource(R.drawable.invernadero), null, Modifier.fillMaxSize(),
-                    alignment = BiasAlignment(0f, -.75f), contentScale = ContentScale.Crop,
+                    painterResource(R.drawable.hab_invernadero), null, Modifier.fillMaxSize(),
+                    alignment = BiasAlignment(0f, -.95f), contentScale = ContentScale.Crop,
                 )
                 if (colores.background.luminance() < .3f) {
                     Box(Modifier.matchParentSize().background(Color.Black.copy(alpha = .38f)))
@@ -57,6 +57,10 @@ fun LoginScreen(estado: UiState<Sesion?>, ingresar: (String, String) -> Unit) {
                 Box(Modifier.matchParentSize().background(Brush.verticalGradient(
                     0f to Color.Transparent, .65f to Color.Transparent, 1f to colores.background,
                 )))
+                Image(
+                    painterResource(R.drawable.poke_marca), null,
+                    Modifier.align(Alignment.TopStart).padding(22.dp).size(48.dp),
+                )
             }
             Column(
                 Modifier.widthIn(max = 440.dp).fillMaxWidth().padding(horizontal = 27.dp).padding(bottom = 28.dp),
@@ -89,10 +93,10 @@ fun LoginScreen(estado: UiState<Sesion?>, ingresar: (String, String) -> Unit) {
                     },
                 )
                 if (estado is UiState.Error) Text(estado.mensaje, color = colores.error)
-                VidrioBoton(enviar, Modifier.fillMaxWidth().heightIn(min = 54.dp), activo = true, habilitado = !ocupado) {
+                VidrioBoton(enviar, Modifier.fillMaxWidth().heightIn(min = 62.dp), destacado = true, habilitado = !ocupado) {
                     Row(Modifier.padding(horizontal = 16.dp, vertical = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                        if (ocupado) CircularProgressIndicator(Modifier.size(17.dp), strokeWidth = 2.dp)
-                        Text(if (ocupado) "Comprobando sesión…" else "Ingresar", color = colores.onPrimaryContainer, style = MaterialTheme.typography.labelLarge)
+                        if (ocupado) CircularProgressIndicator(Modifier.size(17.dp), color = colores.onPrimary, strokeWidth = 2.dp)
+                        Text(if (ocupado) "Comprobando sesión…" else "Ingresar", color = colores.onPrimary, style = MaterialTheme.typography.labelLarge)
                     }
                 }
             }

@@ -43,17 +43,22 @@ fun Modifier.vidrio(
     activo: Boolean = false,
     reflejo: Float = 0f,
     enfocado: Boolean = false,
+    destacado: Boolean = false,
 ): Modifier {
     val colores = MaterialTheme.colorScheme
     val oscuro = colores.surface.luminance() < .3f
     val luz = if (oscuro) Color(0xFFCCE6D2) else Color.White
-    val base = if (activo) colores.primaryContainer else colores.surface
+    val base = when {
+        destacado -> colores.primary
+        activo -> colores.primaryContainer
+        else -> colores.surface
+    }
     val borde = if (enfocado) colores.primary else luz.copy(alpha = if (oscuro) .32f else .96f)
     return clip(forma)
         .background(Brush.verticalGradient(listOf(
-            luz.copy(alpha = if (oscuro) .20f else .80f),
-            base.copy(alpha = if (activo) .92f else .72f),
-            base.copy(alpha = .88f),
+            if (destacado) base else luz.copy(alpha = if (oscuro) .20f else .80f),
+            base.copy(alpha = if (destacado || activo) .96f else .78f),
+            base.copy(alpha = .94f),
         )))
         .background(Brush.radialGradient(
             listOf(luz.copy(alpha = .18f + .22f * reflejo), Color.Transparent),
@@ -70,6 +75,7 @@ fun VidrioBoton(
     activo: Boolean = false,
     habilitado: Boolean = true,
     forma: Shape = CircleShape,
+    destacado: Boolean = false,
     content: @Composable BoxScope.() -> Unit,
 ) {
     val interaccion = remember { MutableInteractionSource() }
@@ -83,7 +89,7 @@ fun VidrioBoton(
                 scaleY = 1f - .070f * avance
                 alpha = if (habilitado) 1f else .58f
             }
-            .vidrio(forma, activo, avance, foco)
+            .vidrio(forma, activo, avance, foco, destacado)
             .clickable(
                 interactionSource = interaccion, indication = null, enabled = habilitado,
                 role = Role.Button, onClick = pulsar,

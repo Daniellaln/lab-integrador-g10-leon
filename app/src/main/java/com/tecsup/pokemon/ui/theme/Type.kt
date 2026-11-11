@@ -18,9 +18,10 @@ private fun texto(tamano: Int, linea: Int, peso: FontWeight = FontWeight.Normal)
     TextStyle(fontFamily = Manrope, fontSize = tamano.sp, lineHeight = linea.sp, fontWeight = peso)
 
 internal val TipografiaBotanica = Typography(
-    displaySmall = TextStyle(fontFamily = FontFamily.Serif, fontSize = 43.sp, lineHeight = 47.sp, letterSpacing = (-1).sp),
-    headlineLarge = TextStyle(fontFamily = FontFamily.Serif, fontSize = 34.sp, lineHeight = 39.sp),
-    headlineMedium = TextStyle(fontFamily = FontFamily.Serif, fontSize = 30.sp, lineHeight = 36.sp),
+    displaySmall = texto(43, 48, FontWeight.Bold).copy(letterSpacing = (-1.9).sp),
+    headlineLarge = texto(34, 39, FontWeight.Bold).copy(letterSpacing = (-1.2).sp),
+    headlineMedium = texto(28, 34, FontWeight.Bold).copy(letterSpacing = (-.8).sp),
+    headlineSmall = texto(23, 29, FontWeight.Bold).copy(letterSpacing = (-.5).sp),
     titleLarge = texto(21, 27, FontWeight.Bold),
     titleMedium = texto(16, 22, FontWeight.Bold),
     titleSmall = texto(14, 20, FontWeight.Bold),

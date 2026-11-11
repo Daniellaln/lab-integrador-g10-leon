@@ -45,8 +45,8 @@ fun AdminScreen(
                     .padding(horizontal = 22.dp).padding(top = 10.dp, bottom = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(17.dp),
             ) {
-                Image(painterResource(R.drawable.prado), null,
-                    Modifier.fillMaxWidth().height(145.dp).clip(RoundedCornerShape(18.dp)),
+                Image(painterResource(R.drawable.hab_urbano), null,
+                    Modifier.fillMaxWidth().height(162.dp).clip(RoundedCornerShape(25.dp)),
                     contentScale = ContentScale.Crop)
                 Text("Datos del dispositivo", style = MaterialTheme.typography.titleLarge)
                 FlowRow(
@@ -59,13 +59,13 @@ fun AdminScreen(
                 }
                 HorizontalDivider(color = colores.outlineVariant)
                 VidrioBoton(
-                    sincronizar, Modifier.fillMaxWidth().heightIn(min = 54.dp),
-                    activo = true, habilitado = !ocupado,
+                    sincronizar, Modifier.fillMaxWidth().heightIn(min = 60.dp),
+                    destacado = true, habilitado = !ocupado,
                 ) {
                     Row(Modifier.padding(12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                        if (ocupado) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
-                        else Icono(R.drawable.poke_refrescar, null, tinte = colores.onPrimaryContainer)
-                        Text(if (ocupado) "Procesando…" else "Sincronizar", style = MaterialTheme.typography.labelLarge)
+                        if (ocupado) CircularProgressIndicator(Modifier.size(18.dp), color = colores.onPrimary, strokeWidth = 2.dp)
+                        else Icono(R.drawable.poke_refrescar, null, tinte = colores.onPrimary)
+                        Text(if (ocupado) "Procesando…" else "Sincronizar", color = colores.onPrimary, style = MaterialTheme.typography.labelLarge)
                     }
                 }
                 TextButton(onClick = { confirmar = true }, enabled = !ocupado, modifier = Modifier.heightIn(min = 48.dp)) {

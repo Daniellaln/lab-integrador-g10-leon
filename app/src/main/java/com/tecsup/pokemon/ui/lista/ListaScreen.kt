@@ -1,6 +1,7 @@
 package com.tecsup.pokemon.ui.lista
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -93,7 +94,7 @@ fun ListaScreen(
                                         foco.clearFocus()
                                     }
                                 },
-                                Modifier.size(48.dp), activo = buscar,
+                                Modifier.size(54.dp), activo = buscar,
                             ) {
                                 Icono(if (buscar) R.drawable.poke_cerrar else R.drawable.poke_buscar, if (buscar) "Cerrar búsqueda" else "Buscar Pokémon")
                             }
@@ -138,13 +139,17 @@ fun ListaScreen(
 @Composable
 private fun FichaCatalogo(item: Item, abrir: () -> Unit, alternar: (() -> Unit)?) {
     val colores = MaterialTheme.colorScheme
-    val pigmento = if (item.numero % 3 == 0) colores.tertiaryContainer else colores.primaryContainer
-    val forma = RoundedCornerShape(18.dp)
-    Surface(onClick = abrir, shape = forma, color = colores.surfaceContainerLow) {
+    val pigmento = when (item.numero % 3) {
+        0 -> colores.tertiaryContainer
+        1 -> colores.primaryContainer
+        else -> colores.secondaryContainer
+    }
+    val forma = RoundedCornerShape(24.dp)
+    Surface(onClick = abrir, shape = forma, color = colores.surface, border = BorderStroke(1.dp, colores.outlineVariant)) {
         Column {
             Box(
                 Modifier.fillMaxWidth().aspectRatio(1.13f)
-                    .background(Brush.verticalGradient(listOf(pigmento, colores.surfaceContainerLow))),
+                    .background(Brush.radialGradient(listOf(colores.surface, pigmento))),
             ) {
                 ArtePokemon(item, Modifier.fillMaxSize().padding(horizontal = 13.dp, vertical = 12.dp))
                 if (alternar != null) Corazon(item, alternar, Modifier.align(Alignment.TopEnd).padding(5.dp).size(48.dp))
@@ -165,15 +170,16 @@ private fun FavoritosVacios(titulo: String, texto: String, explorar: (() -> Unit
         verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
         Image(
-            painterResource(R.drawable.flores_prensadas), null,
+            painterResource(R.drawable.hab_pradera), null,
             Modifier.widthIn(max = 400.dp).fillMaxWidth().aspectRatio(1.54f).clip(RoundedCornerShape(18.dp)),
             contentScale = ContentScale.Crop,
         )
         Text(titulo, style = MaterialTheme.typography.headlineMedium, textAlign = TextAlign.Center)
         Text(texto, textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.onSurfaceVariant)
         if (explorar != null) {
-            VidrioBoton(explorar, Modifier.heightIn(min = 50.dp), activo = true) {
-                Text("Explorar catálogo", Modifier.padding(horizontal = 24.dp, vertical = 12.dp), style = MaterialTheme.typography.labelLarge)
+            VidrioBoton(explorar, Modifier.heightIn(min = 57.dp), destacado = true) {
+                Text("Explorar catálogo", Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
+                    color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.labelLarge)
             }
         }
     }

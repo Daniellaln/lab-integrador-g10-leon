@@ -1,15 +1,26 @@
 package com.tecsup.pokemon.ui.navigation
 
 import android.net.Uri
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -21,6 +32,7 @@ import androidx.navigation.compose.rememberNavController
 import com.tecsup.pokemon.AppContainer
 import com.tecsup.pokemon.R
 import com.tecsup.pokemon.domain.model.Rol
+import com.tecsup.pokemon.domain.model.nombreLegible
 import com.tecsup.pokemon.notification.PermisoNotificaciones
 import com.tecsup.pokemon.ui.UiState
 import com.tecsup.pokemon.ui.admin.AdminScreen
@@ -38,7 +50,6 @@ import com.tecsup.pokemon.ui.lista.ListaScreen
 import com.tecsup.pokemon.ui.lista.ListaViewModel
 import com.tecsup.pokemon.ui.login.LoginScreen
 import com.tecsup.pokemon.ui.login.LoginViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun AppNav(container: AppContainer) {
@@ -68,8 +79,6 @@ fun CatalogoNav(container: AppContainer, admin: Boolean, salir: () -> Unit) {
     var menu by rememberSaveable { mutableStateOf(false) }
     var seleccionado by rememberSaveable { mutableStateOf<String?>(null) }
     var revisionCatalogo by rememberSaveable { mutableIntStateOf(0) }
-    val mensajes = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
     val destinos = remember(admin) {
         buildList {
             add(Destino("catalogo", "Catálogo", R.drawable.poke_libro))
@@ -137,13 +146,16 @@ fun CatalogoNav(container: AppContainer, admin: Boolean, salir: () -> Unit) {
                                     Icono(R.drawable.poke_volver, "Volver")
                                 }
                             } else {
-                                Icono(R.drawable.ic_leaf, null, Modifier.padding(start = 17.dp, end = 9.dp), colores.primary)
+                                Image(
+                                    painterResource(R.drawable.poke_marca), null,
+                                    Modifier.padding(start = 15.dp, end = 10.dp).size(39.dp),
+                                )
                             }
                         },
                         actions = {
                             if (!pantallaSecundaria) {
                                 Box(Modifier.padding(end = 16.dp)) {
-                                    VidrioBoton({ menu = true }, Modifier.size(48.dp)) { Icono(R.drawable.poke_mas, "Opciones de sesión") }
+                                    VidrioBoton({ menu = true }, Modifier.size(52.dp)) { Icono(R.drawable.poke_mas, "Opciones de sesión") }
                                     DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                                         DropdownMenuItem(text = { Text("Cerrar sesión") }, onClick = {
                                             menu = false
@@ -155,12 +167,19 @@ fun CatalogoNav(container: AppContainer, admin: Boolean, salir: () -> Unit) {
                         },
                     )
                 },
-                snackbarHost = { SnackbarHost(mensajes) },
                 bottomBar = {
                     if (!pantallaSecundaria && !pantallaAncha && !teclado) BarraVidrio(destinos, ruta, elegir)
                 },
             ) { padding ->
-                NavHost(nav, startDestination = "catalogo", modifier = Modifier.padding(padding)) {
+                Column(Modifier.fillMaxSize().padding(padding)) {
+                    AnimatedVisibility(
+                        visible = ruta == "catalogo" && seleccionado != null,
+                        enter = slideInVertically { -it / 3 } + fadeIn(),
+                        exit = fadeOut(),
+                    ) {
+                        AvisoComparacion(seleccionado.orEmpty().nombreLegible()) { seleccionado = null }
+                    }
+                    NavHost(nav, startDestination = "catalogo", modifier = Modifier.weight(1f)) {
                     composable("catalogo") {
                         val vm: ListaViewModel = viewModel(factory = container.factory)
                         val estado by vm.estado.collectAsStateWithLifecycle()
@@ -179,13 +198,16 @@ fun CatalogoNav(container: AppContainer, admin: Boolean, salir: () -> Unit) {
                             id -> "Quitar de la comparación"
                             else -> "Comparar con el primero"
                         }
-                        DetalleScreen(estado, vm::cargar, vm::alternarFavorito, etiquetaComparar = etiqueta) {
+                        val tecnica by vm.tecnica.collectAsStateWithLifecycle()
+                        DetalleScreen(
+                            estado, vm::cargar, vm::alternarFavorito, etiquetaComparar = etiqueta,
+                            tecnica = tecnica, consultarTecnica = vm::consultarTecnica, cerrarTecnica = vm::cerrarTecnica,
+                        ) {
                             when (primero) {
                                 null -> {
                                     seleccionado = id
                                     revisionCatalogo++
                                     elegir("catalogo")
-                                    scope.launch { mensajes.showSnackbar("Pokémon elegido. Abre otra ficha para comparar.") }
                                 }
                                 id -> seleccionado = null
                                 else -> nav.navigate("comparar/${Uri.encode(primero)}/${Uri.encode(id)}") {
@@ -225,6 +247,32 @@ fun CatalogoNav(container: AppContainer, admin: Boolean, salir: () -> Unit) {
                         }
                     }
                 }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun AvisoComparacion(nombre: String, cancelar: () -> Unit) {
+    val colores = MaterialTheme.colorScheme
+    Surface(
+        Modifier.fillMaxWidth().padding(horizontal = 18.dp, vertical = 5.dp)
+            .semantics { liveRegion = LiveRegionMode.Polite },
+        shape = RoundedCornerShape(24.dp), color = colores.primaryContainer,
+        contentColor = colores.onPrimaryContainer,
+    ) {
+        Row(
+            Modifier.padding(start = 13.dp, end = 5.dp, top = 5.dp, bottom = 5.dp),
+            horizontalArrangement = Arrangement.spacedBy(11.dp), verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Image(painterResource(R.drawable.poke_marca), null, Modifier.size(34.dp))
+            Column(Modifier.weight(1f)) {
+                Text(nombre, style = MaterialTheme.typography.titleMedium)
+                Text("Elige otro Pokémon para comparar", style = MaterialTheme.typography.bodySmall)
+            }
+            IconButton(onClick = cancelar, modifier = Modifier.size(48.dp)) {
+                Icono(R.drawable.poke_cerrar, "Cancelar selección")
             }
         }
     }
