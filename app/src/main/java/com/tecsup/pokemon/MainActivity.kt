@@ -4,13 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.tecsup.pokemon.domain.model.Item
+import com.tecsup.pokemon.ui.UiState
+import com.tecsup.pokemon.ui.lista.ListaScreen
 import com.tecsup.pokemon.ui.theme.PokemonLeonTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,30 +21,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            PokemonLeonTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            PokemonLeonTheme { Demo() }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PokemonLeonTheme {
-        Greeting("Android")
+private fun Demo() {
+    val ejemplos = listOf(Item("bulbasaur", 1, null), Item("bellossom", 182, null), Item("lilligant", 549, null))
+    Scaffold(topBar = { TopAppBar(title = { Text("Datos de prueba") }) }) { padding ->
+        ListaScreen(UiState.Exito(ejemplos), Modifier.padding(padding))
     }
 }
