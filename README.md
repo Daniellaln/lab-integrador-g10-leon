@@ -1,6 +1,6 @@
 # Pokédex Planta
 
-Laboratorio integrador 11–12 · Fase 1 · Daniella Leon.
+Laboratorio integrador 11–12 · Fase 2 · Daniella Leon.
 
 Catálogo de Pokémon de tipo Planta. Ambos roles pueden consultar fichas, guardar favoritos y cerrar sesión. El administrador puede ver los totales, sincronizar y limpiar la caché del dispositivo.
 
@@ -35,10 +35,24 @@ Se puede compilar sin el archivo JSON. La pantalla de login indica que falta la 
 6. En Android 13 o posterior, concede el permiso de notificaciones. Después de sincronizar debe aparecer «Se guardaron N elementos» y al tocar el aviso se abre la app. Al negar el permiso, la app sigue funcionando.
 7. Gira el teléfono durante el recorrido. La pantalla actual y su ViewModel deben conservarse. Cierra sesión y reabre para confirmar que vuelve al login.
 
-Autoría individual: Daniella Leon. La fase 1 vive en `main`.
+Autoría individual: Daniella Leon. La fase 1 vive en `main` y la fase 2 en `mejora-ia`.
 
-## Capturas del emulador
+## Capturas de la fase 1
 
 [Login](docs/capturas/01_login.png) · [Catálogo](docs/capturas/02_catalogo.png) · [Detalle](docs/capturas/03_detalle.png) · [Favoritos](docs/capturas/04_favoritos.png) · [Panel Admin](docs/capturas/05_panel_admin.png) · [Notificación de Android](docs/capturas/06_notificacion.png)
 
 Las capturas del catálogo y del panel se tomaron con la aplicación ejecutándose, datos reales de PokéAPI y una sesión de revisión simulada. Se comprobó el catálogo de 156 entradas, la ficha de Bulbasaur, la conservación de favoritos tras sincronizar, el borrado de la caché y la publicación del aviso de Android. El acceso con las cuentas reales queda pendiente de configurar Firebase.
+
+## Cambios de la fase 2
+
+- Acceso con ilustración de invernadero y controles de vidrio.
+- Catálogo con imágenes, búsqueda por nombre o número y favoritos.
+- Ficha botánica con tipos, peso y altura.
+- Panel de administrador con totales locales, sincronización y confirmación para limpiar la caché.
+- Tres pruebas de ListaViewModel. El recorrido de emulador comprueba navegación, favoritos, aviso de sincronización y lectura sin red.
+
+[Informe](docs/informe/Pokedex_Planta_Fase2_Daniella_Leon.pdf) · [Prompts](PROMPTS.md) · [Guía de reproducción](docs/reproduccion/GUIA.md)
+
+[Acceso](docs/capturas_fase2/01_login.png) · [Catálogo oscuro con texto ampliado](docs/capturas_fase2/02_catalogo.png) · [Detalle](docs/capturas_fase2/03_detalle.png) · [Favoritos](docs/capturas_fase2/04_favoritos.png) · [Favoritos vacíos](docs/capturas_fase2/05_favoritos_vacios.png) · [Búsqueda](docs/capturas_fase2/06_busqueda.png) · [Panel Admin](docs/capturas_fase2/07_admin.png) · [Sin conexión](docs/capturas_fase2/08_sin_red.png)
+
+Las capturas de ambos roles se hicieron en una sesión de revisión. La captura sin red fuerza un fallo de red para comprobar la caché. Firebase Authentication y las reglas publicadas se documentan por separado en el informe. La validación del inicio de sesión en Android con las cuentas de prueba queda pendiente.
