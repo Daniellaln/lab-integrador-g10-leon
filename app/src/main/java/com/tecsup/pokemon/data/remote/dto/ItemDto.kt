@@ -35,4 +35,8 @@ data class ItemDto(
     val weight: Int,
     val types: List<TipoDto>,
     val sprites: SpritesDto,
+    val species: RecursoDto? = null,
+    val stats: List<EstadisticaDto> = emptyList(),
+    val abilities: List<HabilidadDto> = emptyList(),
+    val moves: List<MovimientoAprendidoDto> = emptyList(),
 )

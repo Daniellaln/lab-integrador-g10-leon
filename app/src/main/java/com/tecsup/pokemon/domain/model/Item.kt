@@ -8,6 +8,7 @@ data class Item(
     val alturaDm: Int? = null,
     val pesoHg: Int? = null,
     val tipos: List<String> = emptyList(),
+    val perfil: PerfilPokemon? = null,
 ) {
     val titulo: String
         get() = id.split('-').joinToString(" ") { parte -> parte.replaceFirstChar(Char::uppercaseChar) }

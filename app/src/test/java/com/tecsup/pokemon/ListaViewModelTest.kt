@@ -102,6 +102,8 @@ class ListaViewModelTest {
             return sincronizar()
         }
         override suspend fun obtenerDetalle(id: String) = Result.success(items.value.first { it.id == id })
+        override suspend fun obtenerTecnica(id: String, habilidad: Boolean) =
+            Result.failure<com.tecsup.pokemon.domain.model.FichaTecnica>(UnsupportedOperationException())
         override suspend fun alternarFavorito(id: String) {
             items.value = items.value.map { if (it.id == id) it.copy(esFavorito = !it.esFavorito) else it }
             favoritos.value = items.value.filter(Item::esFavorito)

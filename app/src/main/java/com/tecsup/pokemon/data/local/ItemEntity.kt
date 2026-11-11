@@ -1,6 +1,7 @@
 package com.tecsup.pokemon.data.local
 
 import androidx.room.Entity
+import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "items")
@@ -12,4 +13,5 @@ data class ItemEntity(
     val alturaDm: Int? = null,
     val pesoHg: Int? = null,
     val tipos: String = "",
+    @ColumnInfo(defaultValue = "''") val perfilJson: String = "",
 )
