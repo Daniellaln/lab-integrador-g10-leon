@@ -12,22 +12,37 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.tecsup.pokemon.AppContainer
+import com.tecsup.pokemon.ui.UiState
 import com.tecsup.pokemon.ui.detalle.DetalleScreen
 import com.tecsup.pokemon.ui.detalle.DetalleViewModel
 import com.tecsup.pokemon.ui.favoritos.FavoritosScreen
 import com.tecsup.pokemon.ui.favoritos.FavoritosViewModel
 import com.tecsup.pokemon.ui.lista.ListaScreen
 import com.tecsup.pokemon.ui.lista.ListaViewModel
+import com.tecsup.pokemon.ui.login.LoginScreen
+import com.tecsup.pokemon.ui.login.LoginViewModel
 
 @Composable
 fun AppNav(container: AppContainer) {
-    CatalogoNav(container)
+    val login: LoginViewModel = viewModel(factory = container.factory)
+    val estado by login.estado.collectAsStateWithLifecycle()
+    val sesion = (estado as? UiState.Exito)?.datos
+    Surface {
+        if (sesion == null) {
+            LoginScreen(estado, login::ingresar)
+        } else {
+            key(sesion.uid) {
+                CatalogoNav(container, login::salir)
+            }
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CatalogoNav(
     container: AppContainer,
+    salir: () -> Unit,
 ) {
     val nav = rememberNavController()
     val entrada by nav.currentBackStackEntryAsState()
@@ -49,6 +64,9 @@ fun CatalogoNav(
                 },
                 navigationIcon = {
                     if (enDetalle) TextButton(onClick = { nav.popBackStack() }) { Text("Volver") }
+                },
+                actions = {
+                    if (!enDetalle) TextButton(onClick = salir) { Text("Cerrar sesión") }
                 },
             )
         },
